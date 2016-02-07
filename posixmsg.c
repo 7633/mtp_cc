@@ -5,8 +5,10 @@
 
 int main(int argc, char** argv) {
 	mqd_t mqdes;
-	mqdes = mq_open("/test.mq", O_RDONLY);
+	mqdes = mq_open("/test.mq", O_RDONLY | O_CREAT);
 	struct mq_attr attr;
+	attr.mq_flags = O_RDONLY;
+	attr.mq_maxmsg = 5;
 	if (mq_getattr(mqdes, &attr) == -1){
 		perror("mq_getattr");
 		exit(1);
